@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>豆瓣电影</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        ol {
+            list-style-position: inside;
+        }
+
+        body {
+            font: 12px Helvetiac, Arial, sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        a:hover {
+            cursor: pointer;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: block;
+            visibility: hidden;
+        }
+
+        body>header {
+            margin-bottom: 40px;
+        }
+
+        .nav-global {
+            width: 100%;
+            background-color: #545652;
+            min-width: 1024px;
+        }
+
+        .nav-global li {
+            list-style: none;
+            min-width: 48px;
+            height: 28px;
+            color: #d5d5d5;
+            font-size: 12px;
+            line-height: 28px;
+            text-align: center;
+            float: left;
+        }
+
+        .nav-global a:hover {
+            color: #ffffff;
+        }
+
+        .movie-nav {
+            background-color: #f0f3f5;
+        }
+
+        .nav-warp {
+            width: 1040px;
+            height: 74px;
+            /* position: relative 0 0 0 0; */
+            margin: 0 auto;
+            border-bottom: 1px solid #e5ebe4;
+        }
+
+        .nav-secondary {
+            width: 1040px;
+            height: 40.6833px;
+            margin: 0 auto;
+        }
+
+        .nav-secondary ul {
+            padding: 6px 0;
+        }
+
+        .nav-secondary li {
+            list-style: none;
+            display: inline-block;
+            height: 28px;
+            color: #27a;
+            font-size: 14px;
+            line-height: 28px;
+            /* text-align: center; */
+            margin-right: 25px;
+        }
+
+        .nav-secondary a:hover {
+            color: #ffffff;
+            background-color: #37a;
+        }
+
+        .nav-logo {
+            font-size: 28px;
+            color: #258dcd;
+            background: url(https://img3.doubanio.com/dae/accounts/resources/19507ad/movie/assets/lg_movie_a12_2.png);
+            background-repeat: no-repeat;
+            background-position-y: center;
+            height: 56px;
+            width: 145px;
+            margin: 0 13px 0 0;
+        }
+
+        .nav-logo a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            line-height: 100em;
+            overflow: hidden;
+        }
+
+        .nav-primary {
+            height: 59px;
+            margin: auto 0;
+            padding: 10px 0 5px;
+        }
+
+        .nav-search {
+            margin: auto 0 auto 10px;
+            padding: 10px 0 15px 0;
+        }
+
+        hr {
+            color: rgba(0, 0, 0, 0.05);
+        }
+
+        legned {
+            display: none;
+        }
+
+        .inp {
+            background: url(https://img3.doubanio.com/dae/accounts/resources/19507ad/movie/assets/nav_mv_bg.png?s=1);
+            background-repeat: no-repeat;
+            width: 470px;
+            height: 34px;
+
+        }
+
+        .inp input {
+            width: 96%;
+            height: 30px;
+            padding-left: 10px;
+            border: 0;
+            margin-right: -3px;
+        }
+
+        .inp-btn {
+            margin-left: -1px;
+        }
+
+        .inp-btn input[type="submit"] {
+            background: url(https://img3.doubanio.com/dae/accounts/resources/19507ad/movie/assets/nav_mv_bg.png?s=1);
+            background-repeat: no-repeat;
+            background-position: 0 -40px;
+            width: 37px;
+            height: 35px;
+            border: 0;
+            font-size: 0;
+        }
+
+        .ui-silde div {
+            display: inline-block;
+        }
+
+        .screeing-bd li {
+            list-style: none;
+        }
+
+        .screeing-item {
+            float: left;
+            margin-right: 25px;
+            width: 115px;
+            text-align: center;
+            display: block;
+        }
+
+        .screeing-item li:not(:first-child) {
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .screeing-item ul li:first-child {
+            margin-bottom: 12px;
+        }
+
+        .screeing-item ul li:first-child,
+        .screeing-item ul li:first-child img {
+            width: 115px;
+            height: 161px;
+        }
+
+        .movie-name a {
+            height: 24px;
+            display: inline-block;
+            overflow: hidden;
+            color: #000000;
+        }
+
+        .movie-name {
+            font-size: 14px;
+        }
+
+        .rating {
+            font-size: 12px;
+            color: #e09015;
+        }
+
+        .ticket-btn {
+            font-size: 12px;
+            background-color: #268dcd;
+            border-radius: 2px;
+            color: white;
+            width: 90px;
+            height: 24px;
+            margin: 0 auto;
+        }
+
+        .btn-prev {
+            background: url(https://img3.doubanio.com/f/movie/708be21a7bb2d0f21419dc4e2e2fde8b21ad661a/pics/movie/slide_swithc_2.png) no-repeat;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-next {
+            background: url(https://img3.doubanio.com/f/movie/708be21a7bb2d0f21419dc4e2e2fde8b21ad661a/pics/movie/slide_swithc_2.png) no-repeat -18px 0;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-prev a,
+        .btn-next a {
+            display: inline-block;
+        }
+
+        article {
+            width: 675px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+            float: left;
+            padding-right: 40px;
+        }
+
+        article section {
+            margin-bottom: 36px;
+        }
+
+        .screeing-item:last-child {
+            margin-right: 0;
+        }
+
+        article h2 {
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        article h2 a {
+            font-size: 13px;
+        }
+
+        section header {
+            border-bottom: 1px solid #e5ebe4;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+        }
+
+        main {
+            width: 1040px;
+            margin: 0 auto;
+        }
+
+        .weibo-icon {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: url(https://img3.doubanio.com/f/movie/8f5f3bdbdc71bfd34eef8e3f16d13c857e59301b/pics/movie/home_weibo.png);
+        }
+
+        .weixin-icon {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: url(https://img3.doubanio.com/f/movie/5d377d72b39a5cd2532813d1e42da3f34438a465/pics/movie/home_weixin.png);
+        }
+
+        .banzui-icon {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: url(https://img3.doubanio.com/f/movie/8cf33706051d29ae3cf98091070f0ec2481959ed/pics/movie/bite_me@2x.jpg) no-repeat;
+            background-size: contain;
+        }
+
+        .xinxiang-icon {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: url(https://img3.doubanio.com/f/movie/c18cb6b93e0c07828c59c97e495d3816a8539bf6/pics/movie/home_award_site@2x.jpg) no-repeat;
+            background-size: contain;
+        }
+
+        .guanying-icon {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: url(https://img3.doubanio.com/f/movie/a3cfe33f6e301824220261241089e133d0fcb5d1/pics/movie/home_club_site@2x.jpg) no-repeat;
+            background-size: contain;
+        }
+
+        /* .hot-movie > h2, .hot-teleplay > h2 {
+            width: 675px;
+            height: 36px;
+        } */
+
+        .hot-movie>header ul,
+        .hot-teleplay>header ul {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .hot-movie>header li,
+        .hot-teleplay>header li {
+            float: left;
+            margin-left: 12px;
+            color: gray;
+        }
+
+        .hot-movie>header a,
+        .hot-teleplay>header a {
+            margin-left: 12px;
+        }
+
+        .hot-movie>header a:hover,
+        .hot-teleplay>header a:hover {
+            color: white;
+            background-color: #37a
+        }
+
+        .hot-movie .item-list li a,
+        .hot-teleplay .item-list li a {
+            display: inline-block;
+            width: 115px;
+            height: 210px;
+            margin: 0 25px 10px 0;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .hot-movie .cover,
+        .hot-teleplay .cover {
+            margin-bottom: 5px;
+        }
+
+        /* .hot-movie .item-list li span:nth-child(2),
+        .hot-teleplay .item-list li span:first-child {
+            color: #37a;
+            background: red;
+            padding: 10px;
+        } */
+
+        .cover+span {
+            color: #37a;
+        }
+
+        .hot-movie .item-list li span:last-child,
+        .hot-teleplay .item-list li span:last-child {
+            color: #e09015;
+        }
+
+        .hot-movie .item-list li:nth-child(5n+0) a,
+        .hot-teleplay .item-list li:nth-child(5n) a {
+            margin-right: 0;
+        }
+
+        .hot-movie .cover,
+        .hot-teleplay .cover {
+            width: 115px;
+            height: 161px;
+            display: block;
+        }
+
+        .hot-movie .item-list li,
+        .hot-teleplay .item-list li {
+            float: left;
+        }
+
+        /* .hot-movie .item-list li a *, .hot-teleplay .item-list li a * {
+            display: block;
+        } */
+
+        .recent-movie header,
+        .hot-recommend,
+        .film-review {
+            font-size: 16px;
+        }
+
+        .recent-movie header a,
+        .hot-recommend header a,
+        .film-review header a {
+            font-size: 13px;
+            color: #37a;
+            margin-left: 15px;
+        }
+
+        header .silde-tipe {
+            font-size: 12px;
+            line-height: 12px;
+            color: gray;
+            margin-right: 15px;
+        }
+
+        header .ui-silde-control {
+            vertical-align: middle;
+        }
+
+        .hot-recommend h2 {
+            width: 60%;
+            float: left;
+        }
+
+        .recommend-item>a {
+            float: left;
+        }
+
+        .recommend-item>div {
+            float: left;
+            width: 277px;
+            height: 168px;
+            padding: 48px 24px 24px 24px;
+            background-color: #F9F9F9;
+        }
+
+        .recommend-item>div h3 {
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .recommend-item>div p {
+            font-size: 13px;
+            color: #999;
+            margin: 13px 0;
+        }
+
+        .review-list li {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .review-list li>div {
+            float: left;
+        }
+
+        .review-list .cover img {
+            width: 68px;
+        }
+
+        .review-text {
+            width: 592px;
+            margin-left: 15px;
+            font-size: 13px;
+        }
+
+        .review-text h3 {
+            font-size: 15px;
+            font-weight: normal;
+        }
+
+        .review-text a:hover {
+            color: #ffffff;
+            background-color: #37a;
+        }
+
+        .review-text a {
+            color: #37a;
+        }
+
+        .review-text span a,
+        .review-text div {
+            color: #666;
+        }
+
+        .review-text>div {
+            margin: 5px 0;
+        }
+
+        body>footer {
+            border-top: 1px dashed #eaeaea;
+            padding: 6px 0;
+            margin: 40px auto 0 auto;
+            width: 1040px;
+            color: #999;
+        }
+
+        body>footer span,
+        body>footer li {
+            float: left;
+        }
+
+        body>footer ul {
+            float: right;
+        }
+
+        body>footer li:not(:last-child)::after {
+            content: "·";
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        body>footer a {
+            color: #37a;
+        }
+
+        body>footer a:hover {
+            color: white;
+            background-color: #37a;
+        }
+
+        aside {
+            font-size: 13px;
+            line-height: 1.5em;
+            float: left;
+            width: 300px;
+        }
+
+        aside section.bg {
+            background-color: #f2f7f6;
+            border-radius: 4px;
+            padding: 12px 0 12px 18px;
+            margin-bottom: 20px;
+        }
+
+        aside section {
+            margin-bottom: 40px;
+        }
+
+        aside h2 {
+            font-weight: normal;
+            font-size: 16px;
+        }
+
+        aside h2 a {
+            font-size: 13px;
+        }
+
+        aside a {
+            color: #37a;
+        }
+
+        aside a:hover {
+            color: #ffffff;
+            background-color: #37a;
+        }
+
+        /* aside section .container {
+            margin-bottom: 20px;
+            padding: 12px 0 12px 18px;
+        } */
+
+        aside .movie-active h2 {
+            color: #072;
+        }
+
+        aside .movie-active li {
+            margin-top: 8px;
+        }
+
+        aside .top10-movie header {
+            margin-bottom: 5px;
+        }
+
+        aside .top10-movie li {
+            padding: 7px 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        aside .doulist header {
+            margin-bottom: 10px;
+        }
+
+        aside .doulist li {
+            border-bottom: 1px solid #eaeaea;
+            padding: 15px 0;
+        }
+
+        aside .doulist li>a {
+            float: left;
+        }
+
+        aside .doulist li>span {
+            float: right;
+            color: #999;
+        }
+
+        aside .contact-info li {
+            padding: 8px 0;
+        }
+
+        aside .follow li {
+            float: left;
+            text-align: center;
+            width: 60px;
+            font-size: 12px;
+        }
+
+        aside .follow a[class*="icon"] {
+            margin: 0 10px 5px 10px;
+        }
+
+        ul.slide-control li {
+            float: left;
+            margin: 0 5px;
+        }
+
+        .btn-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #999;
+            display: inline-block; /*行内元素设置宽高无效*/
+        }
+
+        article footer {
+            width: 136px;
+            margin: 0 auto;
+            position: relative;
+            top: -10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-global clearfix">
+                <ul>
+                    <li>
+                        <a>豆瓣</a>
+                    </li>
+                    <li>
+                        <a>读书</a>
+                    </li>
+                    <li>
+                        <a>电影</a>
+                    </li>
+                    <li>
+                        <a>音乐</a>
+                    </li>
+                    <li>
+                        <a>同城</a>
+                    </li>
+                    <li>
+                        <a>小组</a>
+                    </li>
+                    <li>
+                        <a>阅读</a>
+                    </li>
+                    <li>
+                        <a>FM</a>
+                    </li>
+                    <li>
+                        <a>时间</a>
+                    </li>
+                    <li>
+                        <a>市集</a>
+                    </li>
+                    <li>
+                        <a>更多</a>
+                    </li>
+                    <li class="right">
+                        <a>注册</a>
+                    </li>
+                    <li class="right">
+                        <a>登录</a>
+                    </li>
+                    <li class="right">
+                        <a>下载豆瓣客户端</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="movie-nav">
+                <div class="nav-warp">
+                    <div class="nav-primary clearfix">
+                        <div class="nav-logo left">
+                            <a href="">豆瓣电影</a>
+                        </div>
+                        <div class="nav-search left">
+                            <form method="get" action="">
+                                <filedset class="clearfix">
+                                    <legned>搜索：</legned>
+                                    <div class="inp left">
+                                        <input id="inp-query" name="search_text" type="search" placeholder="搜索电影、电视剧、综艺、影人" size="22" maxlength="60" />
+                                    </div>
+                                    <div class="inp-btn left">
+                                        <input type="submit" value="搜索" />
+                                    </div>
+                                </filedset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-secondary">
+                    <ul>
+                        <li>
+                            <a>影讯&购票</a>
+                        </li>
+                        <li>
+                            <a>选电影</a>
+                        </li>
+                        <li>
+                            <a>电视剧</a>
+                        </li>
+                        <li>
+                            <a>排行榜</a>
+                        </li>
+                        <li>
+                            <a>分类</a>
+                        </li>
+                        <li>
+                            <a>影评</a>
+                        </li>
+                        <li>
+                            <a>2017年度榜单</a>
+                        </li>
+                        <li>
+                            <a>2017观影报告</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="clearfix">
+        <article>
+            <div class="container">
+                <section class="recent-movie">
+                    <header class="clearfix">
+                        <div class="ui-silde right">
+                            <div class="silde-tipe">
+                                <span class="ui-silde-index">1</span>
+                                /
+                                <span class="ui-silde-max">3</span>
+                            </div>
+                            <div class="ui-silde-control">
+                                <span class="btn-prev">
+                                    <a title="prev"></a>
+                                </span>
+                                <span class="btn-next">
+                                    <a title="next"></a>
+                                </span>
+                            </div>
+                        </div>
+                        <h2>
+                            正在热映
+                            <a>全部正在热映>></a>
+                            <a>即将上映>></a>
+                        </h2>
+                    </header>
+                    <div class="screeing-bd">
+                        <ul class="clearfix">
+                            <li class="screeing-item">
+                                <ul>
+                                    <li>
+                                        <a href="https://movie.douban.com/subject/26752088/?from=showing">
+                                            <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2519070834.jpg" alt="我不是药神" />
+                                        </a>
+                                    </li>
+                                    <li class="movie-name">
+                                        <a href="https://movie.douban.com/subject/26752088/?from=showing">我不是药神</a>
+                                    </li>
+                                    <li class="rating">
+                                        <span>8.1</span>
+                                    </li>
+                                    <li class="ticket-btn">
+                                        <a>选座购票</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="screeing-item">
+                                <ul>
+                                    <li>
+                                        <a href="https://movie.douban.com/subject/26752088/?from=showing">
+                                            <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2526297221.jpg" alt="邪不压正" />
+                                        </a>
+                                    </li>
+                                    <li class="movie-name">
+                                        <a href="https://movie.douban.com/subject/26752088/?from=showing">邪不压正</a>
+                                    </li>
+                                    <li class="rating">
+                                        <span>7.1</span>
+                                    </li>
+                                    <li class="ticket-btn">
+                                        <a>选座购票</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="screeing-item">
+                                <ul>
+                                    <li>
+                                        <a href="https://movie.douban.com/subject/26416062/?from=showing">
+                                            <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2522069454.jpg" alt="侏罗纪世界2" />
+                                        </a>
+                                    </li>
+                                    <li class="movie-name">
+                                        <a href="https://movie.douban.com/subject/26416062/?from=showing">侏罗纪世界2</a>
+                                    </li>
+                                    <li class="rating">
+                                        <span>6.9</span>
+                                    </li>
+                                    <li class="ticket-btn">
+                                        <a>选座购票</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="screeing-item">
+                                <ul>
+                                    <li>
+                                        <a href="https://movie.douban.com/subject/26752088/?from=showing">
+                                            <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2522820714.jpg" alt="新大头儿子和小头爸爸3：俄罗斯奇遇记" />
+                                        </a>
+                                    </li>
+                                    <li class="movie-name">
+                                        <a href="https://movie.douban.com/subject/26752088/?from=showing">新大头儿子和小头爸爸3：俄罗斯奇遇记</a>
+                                    </li>
+                                    <li class="rating">
+                                        <span>5.2</span>
+                                    </li>
+                                    <li class="ticket-btn">
+                                        <a>选座购票</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="screeing-item">
+                                <ul>
+                                    <li>
+                                        <a href="https://movie.douban.com/subject/26925317/?from=showing">
+                                            <img src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2525528688.jpg" alt="动物世界" />
+                                        </a>
+                                    </li>
+                                    <li class="movie-name">
+                                        <a href="https://movie.douban.com/subject/26925317/?from=showing">动物世界</a>
+                                    </li>
+                                    <li class="rating">
+                                        <span>7.3</span>
+                                    </li>
+                                    <li class="ticket-btn">
+                                        <a>选座购票</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="hot-movie">
+                    <header>
+                        <h2>
+                            最近热门电影
+                            <ul class="clearfix">
+                                <li>
+                                    <a>热门</a>
+                                </li>
+                                <li>
+                                    <a>最新</a>
+                                </li>
+                                <li>
+                                    <a>豆瓣高分</a>
+                                </li>
+                                <li>
+                                    <a>冷门佳片</a>
+                                </li>
+                                <li>
+                                    <a>华语</a>
+                                </li>
+                                <li>
+                                    <a>欧美</a>
+                                </li>
+                                <li>
+                                    <a>韩国</a>
+                                </li>
+                                <li>
+                                    <a>日本</a>
+                                </li>
+                                <li>
+                                    <a>更多>></a>
+                                </li>
+                            </ul>
+                        </h2>
+                    </header>
+                    <div class="item-list">
+                        <ul class="clearfix">
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2520095279.jpg">
+                                    <span>燃烧</span>
+                                    <span>7.9</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2520331478.jpg">
+                                    <span>超时空同居</span>
+                                    <span>7.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2519232908.jpg">
+                                    <span>哥斯拉：决战之都</span>
+                                    <span>6.7</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2527663305.jpg">
+                                    <span>侦探</span>
+                                    <span>7.4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2512023033.jpg">
+                                    <span>旅程终点</span>
+                                    <span>6.3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2523592367.jpg">
+                                    <span>爱你，西蒙</span>
+                                    <span>8.3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2518856022.jpg">
+                                    <span>犬之岛</span>
+                                    <span>8.3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2517333671.jpg">
+                                    <span>暴裂无声</span>
+                                    <span>8.2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2510081688.jpg">
+                                    <span>三块广告牌</span>
+                                    <span>8.7</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2523632248.jpg">
+                                    <span>厕所英雄</span>
+                                    <span>7.1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer>
+                        <ul class="slide-control clearfix">
+                            <li>
+                                <a class="btn-prev"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-next"></a>
+                            </li>
+                        </ul>
+                    </footer>
+                </section>
+                <section class="hot-teleplay">
+                    <header>
+                        <h2>
+                            最近热门电视剧
+                            <ul class="clearfix">
+                                <li>
+                                    <a>热门</a>
+                                </li>
+                                <li>
+                                    <a>国产剧</a>
+                                </li>
+                                <li>
+                                    <a>综艺</a>
+                                </li>
+                                <li>
+                                    <a>美剧</a>
+                                </li>
+                                <li>
+                                    <a>日剧</a>
+                                </li>
+                                <li>
+                                    <a>韩剧</a>
+                                </li>
+                                <li>
+                                    <a>日本动画</a>
+                                </li>
+                                <li>
+                                    <a>纪录片</a>
+                                </li>
+                                <li>
+                                    <a>更多>></a>
+                                </li>
+                            </ul>
+                        </h2>
+                    </header>
+                    <div class="item-list">
+                        <ul class="clearfix">
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2517089666.jpg">
+                                    <span>镇魂</span>
+                                    <span>6.4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2500515153.jpg">
+                                    <span>扶摇</span>
+                                    <span>5.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2527167540.jpg">
+                                    <span>中餐厅 第二季</span>
+                                    <span>7.3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2527543485.jpg">
+                                    <span>幻乐之城</span>
+                                    <span>7.2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2509891341.jpg">
+                                    <span>延禧攻略</span>
+                                    <span>6.7</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2517077652.jpg">
+                                    <span>西部世界 第二季</span>
+                                    <span>9.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2520109024.jpg">
+                                    <span>向往的生活</span>
+                                    <span>8.1</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2523017228.jpg">
+                                    <span>流星花园</span>
+                                    <span>3.1</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2524295558.jpg">
+                                    <span>人生一串</span>
+                                    <span>8.9</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <img class="cover" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2494923060.jpg">
+                                    <span>天乩之白蛇传说</span>
+                                    <span>5.8</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer>
+                        <ul class="slide-control clearfix">
+                            <li>
+                                <a class="btn-prev"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-dot"></a>
+                            </li>
+                            <li>
+                                <a class="btn-next"></a>
+                            </li>
+                        </ul>
+                    </footer>
+                </section>
+                <section class="hot-recommend">
+                    <header class="clearfix">
+                        <h2>
+                            热门推荐
+                        </h2>
+                        <div class="ui-silde right">
+                            <div class="silde-tipe">
+                                <span class="ui-silde-index">1</span>
+                                /
+                                <span class="ui-silde-max">8</span>
+                            </div>
+                            <div class="ui-silde-control">
+                                <span class="btn-prev">
+                                    <a></a>
+                                </span>
+                                <span class="btn-next">
+                                    <a></a>
+                                </span>
+                            </div>
+                        </div>
+                    </header>
+                    <div>
+                        <ul>
+                            <li>
+                                <div class="clearfix recommend-item">
+                                    <a>
+                                        <img src="https://img1.doubanio.com/view/movie_gallery_frame_hot_rec/normal/public/398c9ba33344cec.jpg" width="350px" height="240px"
+                                            alt="瓣嘴丨沈腾被毒评暴击耿直开怼秒变快乐源泉">
+                                    </a>
+                                    <div>
+                                        <h3>
+                                            <a>瓣嘴丨沈腾被毒评暴击耿直开怼秒变快乐源泉</a>
+                                        </h3>
+                                        <p>叔圈101表情包担当水月哥哥沈腾希望你化掉~</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="film-review">
+                    <header>
+                        <h2>
+                            最受欢迎的影评
+                            <a>更多热门影评>></a>
+                            <a>新片影评>></a>
+                        </h2>
+                    </header>
+                    <div>
+                        <ul class="review-list">
+                            <li class="clearfix">
+                                <div>
+                                    <a class="cover">
+                                        <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p453675494.jpg">
+                                    </a>
+                                </div>
+                                <div class="review-text">
+                                    <h3>
+                                        <a href="https://movie.douban.com/review/9513140/" class="">《太阳照常升起》中黄秋生扮演的梁老师为何选择自杀？</a>
+                                    </h3>
+                                    <div>
+                                        <span>
+                                            <a>Pallas</a>
+                                        </span>
+                                        评论
+                                        <span>
+                                            <a>《太阳照常升起》</a>
+                                        </span>
+                                        <span></span>
+                                    </div>
+                                    <p>
+                                        如果用一句话概括：《太阳照常升起》是用 “姜文”和妈（周韵）、儿子（房祖名）； “姜文”和妻子（孔维）； “姜文”和林医生（陈冲）。 三个故事三条线讲述了一个男人抵不过外界诱惑抛家弃子，最后反报应到自...
+                                        <a>（全文）</a>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div>
+                                    <a class="cover">
+                                        <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2518132366.jpg">
+                                    </a>
+                                </div>
+                                <div class="review-text">
+                                    <h3>
+                                        <a href="" class="">我们需要这样的电影</a>
+                                    </h3>
+                                    <div>
+                                        <span>
+                                            <a>银杏叶</a>
+                                        </span>
+                                        评论
+                                        <span>
+                                            <a>《血观音》</a>
+                                        </span>
+                                        <span></span>
+                                    </div>
+                                    <p>
+                                        记得在光点華山看首映的时候，导演杨雅喆预测最佳女主最佳女配，分别是惠英红和文淇，并且希望自己能获最佳影片，不知道导演杨雅喆想没想过，自己开完笑的一句话竟会成真！ 但是看过电影你便会知道，为什么金馬还...
+                                        <a>（全文）</a>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div>
+                                    <a class="cover">
+                                        <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2527484082.jpg">
+                                    </a>
+                                </div>
+                                <div class="review-text">
+                                    <h3>
+                                        <a href="" class="">【C+影评】摩天营救：你不过失去了一条腿，可他们失去的是脑子啊</a>
+                                    </h3>
+                                    <div>
+                                        <span>
+                                            <a>CydenyLau</a>
+                                        </span>
+                                        评论
+                                        <span>
+                                            <a>《摩天营救》</a>
+                                        </span>
+                                        <span></span>
+                                    </div>
+                                    <p>
+                                        自2011年的《速度与激情5》以来，道恩·“巨石”·强森迎来了影视生涯的第二春，仿佛《木乃伊2》蝎子王的糟糕CG，想学《生化危机》没学成的《毁灭战士》压根不存在一样。令人欣慰的是，他没有和早年模仿的前辈们...
+                                        <a>（全文）</a>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div>
+                                    <a class="cover">
+                                        <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2511708562.jpg">
+                                    </a>
+                                </div>
+                                <div class="review-text">
+                                    <h3>
+                                        <a href="" class="">无尽的几个关键观赏点</a>
+                                    </h3>
+                                    <div>
+                                        <span>
+                                            <a>亦非一飞易飛</a>
+                                        </span>
+                                        评论
+                                        <span>
+                                            <a>《无尽》</a>
+                                        </span>
+                                        <span></span>
+                                    </div>
+                                    <p>
+                                        看了很多下面的影评。发现好多人都说看不懂，并且不知所以。 所以我这里写几个关键点，希望各位可以带着再看看，帮助各位更加了解这部电影。 1：兄弟2个人，是十年前逃出营地的。也恰恰正好是十年，2个人决定会营...
+                                        <a>（全文）</a>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </article>
+        <aside>
+            <div class="container">
+                <section class="ration-answer bg">
+                    <div class="container">
+                        <ul>
+                            <li>
+                                <a>豆瓣电影评分八问</a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="movie-active bg">
+                    <div class="container">
+                        <h2>电影活动...</h2>
+                        <ul>
+                            <li>
+                                <a>一大波爱情电影回忆正在袭来！</a>
+                            </li>
+                            <li>
+                                <a>短片创作，之于电影人究竟有何意义？</a>
+                            </li>
+                            <li>
+                                <a>观影会客厅|导演张扬，忠于本心</a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="top10-movie">
+                    <div class="container">
+                        <header>
+                            <h2>
+                                本周口碑榜
+                                <a>更多榜单>></a>
+                            </h2>
+                        </header>
+                        <ol>
+                            <li>
+                                <a>我不是药神</a>
+                            </li>
+                            <li>
+                                <a>芬妮的旅程</a>
+                            </li>
+                            <li>
+                                <a>书店</a>
+                            </li>
+                            <li>
+                                <a>天使在美国第二部：重建</a>
+                            </li>
+                            <li>
+                                <a>女爵印象</a>
+                            </li>
+                            <li>
+                                <a>进击的巨人剧场版：觉醒的咆哮</a>
+                            </li>
+                            <li>
+                                <a>无人注视</a>
+                            </li>
+                            <li>
+                                <a>天堂大塞车</a>
+                            </li>
+                            <li>
+                                <a>鬼故事</a>
+                            </li>
+                            <li>
+                                <a>跨越8年的新娘</a>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+                <section class="doulist">
+                    <div class="container">
+                        <header>
+                            <h2>热门豆列</h2>
+                        </header>
+                        <ul>
+                            <li class="clearfix">
+                                <a>女孩们的故事【电影】</a>
+                                <span>
+                                    <span>84</span>
+                                    <span>推荐</span>
+                                </span>
+                            </li>
+                            <li class="clearfix">
+                                <a>上海电影节历届获奖影片</a>
+                                <span>
+                                    <span>6</span>
+                                    <span>推荐</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="contact-info">
+                    <div class="container">
+                        <header>
+                            <h2>合作联系</h2>
+                        </header>
+                        <ul>
+                            <li>电影合作邮箱：movie@douban.com</li>
+                            <li>电视剧合作邮箱：tv@douban.com
+                                <img class="new" src="https://img3.doubanio.com/f/shire/486503da8c82ffdbecec41c065927f96cbf02e4f/pics/icon/ic_new.png" />
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="follow">
+                    <div class="container">
+                        <header>
+                            <h2>关注我们</h2>
+                        </header>
+                        <ul class="clearfix">
+                            <li>
+                                <a class="weibo-icon" href="http://weibo.com/doubanfilm"></a>
+                                <a href="http://weibo.com/doubanfilm">微博</a>
+                            </li>
+                            <li>
+                                <a class="weixin-icon" href=""></a>
+                                <a href="">微信</a>
+                            </li>
+                            <li>
+                                <a class="banzui-icon" href="http://weibo.com/doubanzui"></a>
+                                <a href="http://weibo.com/doubanzui">瓣嘴</a>
+                            </li>
+                            <li>
+                                <a class="xinxiang-icon" href="https://site.douban.com/doubanfilmawards/"></a>
+                                <a href="https://site.douban.com/doubanfilmawards/">鑫像奖小站</a>
+                            </li>
+                            <li>
+                                <a class="guanying-icon" href="https://www.douban.com/people/nobodyfilm/"></a>
+                                <a href="https://www.douban.com/people/nobodyfilm/">观影club</a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </aside>
+    </main>
+    <footer class="clearfix">
+        <span>© 2005－2018 douban.com, all rights reserved 北京豆网科技有限公司</span>
+        <ul class="clearfix">
+            <li>
+                <a>关于豆瓣</a>
+            </li>
+            <li>
+                <a>在豆瓣工作</a>
+            </li>
+            <li>
+                <a>联系我们</a>
+            </li>
+            <li>
+                <a>免责声明</a>
+            </li>
+            <li>
+                <a>帮助中心</a>
+            </li>
+            <li>
+                <a>移动应用</a>
+            </li>
+            <li>
+                <a>豆瓣广告</a>
+            </li>
+        </ul>
+    </footer>
+</body>
+
+</html>
